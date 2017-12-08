@@ -110,41 +110,48 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		autonomous();
 	}
 	
 	public void autonomous() {
 		bucketAngle = GetI2C.getData();
 		
-		if (step == 1) {
-			if (bucketAngle > 50) {
-				driveTrain.drive.arcadeDrive(.5, .1);
-			} else if (bucketAngle < 50) {
-				driveTrain.drive.arcadeDrive(.5, -.1);
-			} else {
-				driveTrain.drive.arcadeDrive(.5, 0);
-			}
-			if (limitSwitch.get()){
-				step = 2;
+		//if (Timer.getFPGATimestamp() < 10) {
+			if (step == 1) {
+				System.out.println(bucketAngle);
+				if (bucketAngle == 0) {
+					driveTrain.drive(.6, 0);
+				} else if (bucketAngle > .5) {
+					driveTrain.drive.arcadeDrive(.6, -.5);
+				} else if (bucketAngle < .5) {
+					driveTrain.drive.arcadeDrive(.6, .5);
+				}
+				if (limitSwitch.get()){
+					step = 2;
+					time = Timer.getFPGATimestamp();
+				}
+			} else if (step == 2) {
+				System.out.println("step 2");
+				if (Timer.getFPGATimestamp() < time + 1) {
+					new MoveJODDown();
+				} else {
+					step = 3;
+				}
+			} else if (step == 3) {
+				System.out.println("step 3");
+				new ClampJOD();
 				time = Timer.getFPGATimestamp();
+				step = 4;
+			} else if (step == 4) {
+				System.out.println("step 4");
+				if (Timer.getFPGATimestamp() < time + 1) {
+					new MoveJODUp();
+				} else {
+					step = 5;
+				}
 			}
-		} else if (step == 2) {
-			if (Timer.getFPGATimestamp() < time + 1) {
-				new MoveJODDown();
-			} else {
-				step = 3;
-			}
-		} else if (step == 3) {
-			new ClampJOD();
-			time = Timer.getFPGATimestamp();
-			step = 4;
-		} else if (step == 4) {
-			if (Timer.getFPGATimestamp() < time + 1) {
-				new MoveJODUp();
-			} else {
-				step = 5;
-			}
-		}
-		
+		//}
 	}
 
 	@Override

@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveJODDown extends Command {
+public class stopJOD extends Command {
 
-    public MoveJODDown() {
+    public stopJOD() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.jod);
@@ -17,7 +17,7 @@ public class MoveJODDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.jod.moveJODDown();
+    	Robot.jod.stopMotors();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,7 +31,6 @@ public class MoveJODDown extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.jod.stopMotors();
     }
 
     // Called when another command which requires one or more of the same

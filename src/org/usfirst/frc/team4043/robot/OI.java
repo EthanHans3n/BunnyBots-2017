@@ -11,6 +11,7 @@ import org.usfirst.frc.team4043.robot.commands.MoveJODUp;
 import org.usfirst.frc.team4043.robot.commands.Shift;
 import org.usfirst.frc.team4043.robot.commands.UnShift;
 import org.usfirst.frc.team4043.robot.commands.UnclampJOD;
+import org.usfirst.frc.team4043.robot.commands.stopJOD;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -63,6 +64,9 @@ public class OI {
 		
 		armUp.whenPressed(new MoveJODUp());
 		armDown.whenPressed(new MoveJODDown());
+		
+		armUp.whenReleased(new stopJOD());
+		armDown.whenReleased(new stopJOD());
 		
 		clamp.whenPressed(new ClampJOD());
 		unClamp.whenPressed(new UnclampJOD());

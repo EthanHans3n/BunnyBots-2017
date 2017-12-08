@@ -14,21 +14,26 @@ public class JawsOfDeath extends Subsystem {
     // here. Call these from Commands.
 	
 	public void moveJODUp() {
-		RobotMap.jodMover1.set(.25);
-		RobotMap.jodMover2.set(.25);
+		RobotMap.jodMover1.set(.3);
+		RobotMap.jodMover2.set(.3);
 	}
 	
 	public void moveJODDown() {
-		RobotMap.jodMover1.set(-.15);
-		RobotMap.jodMover2.set(-.15);
+		RobotMap.jodMover1.set(-.3);
+		RobotMap.jodMover2.set(-.3);
 	}
 	
 	public void clampJOD() {
-		RobotMap.jodClamper.set(true);
+		RobotMap.jodClamper.set(false);
 	}
 	
 	public void unclampJOD() {
-		RobotMap.jodClamper.set(false);
+		RobotMap.jodClamper.set(true);
+	}
+	
+	public void stopMotors() {
+		RobotMap.jodMover1.set(0);
+		RobotMap.jodMover2.set(0);
 	}
 
     public void initDefaultCommand() {

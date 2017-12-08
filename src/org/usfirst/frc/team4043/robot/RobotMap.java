@@ -28,7 +28,8 @@ public class RobotMap {
 	public static CANTalon jodMover1 = new CANTalon(3);
 	public static CANTalon jodMover2 = new CANTalon(2);
 	
-	public static Solenoid shifter = new Solenoid(16, 0);
-	public static Solenoid jodClamper = new Solenoid(16, 1);
+	public static Solenoid shifter = new Solenoid(0, 1);
+	public static Solenoid jodClamper = new Solenoid(0, 0);
+	
 	
 }
