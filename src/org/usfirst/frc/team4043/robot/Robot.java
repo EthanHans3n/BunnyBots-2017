@@ -15,6 +15,7 @@ import org.usfirst.frc.team4043.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4043.robot.commands.GetI2C;
 import org.usfirst.frc.team4043.robot.commands.MoveJODDown;
 import org.usfirst.frc.team4043.robot.commands.MoveJODUp;
+import org.usfirst.frc.team4043.robot.commands.UnclampJOD;
 import org.usfirst.frc.team4043.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4043.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4043.robot.subsystems.JawsOfDeath;
@@ -91,6 +92,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
+		
+		step = 1;
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -130,25 +133,45 @@ public class Robot extends IterativeRobot {
 				if (limitSwitch.get()){
 					step = 2;
 					time = Timer.getFPGATimestamp();
+					
 				}
 			} else if (step == 2) {
-				System.out.println("step 2");
-				if (Timer.getFPGATimestamp() < time + 1) {
-					new MoveJODDown();
+				//System.out.println("step 2");
+				if (Timer.getFPGATimestamp() < time + .4) {
+					jod.unclampJOD();
+					jod.moveJODDown();
 				} else {
 					step = 3;
+					time = Timer.getFPGATimestamp();
 				}
 			} else if (step == 3) {
-				System.out.println("step 3");
-				new ClampJOD();
-				time = Timer.getFPGATimestamp();
-				step = 4;
-			} else if (step == 4) {
-				System.out.println("step 4");
-				if (Timer.getFPGATimestamp() < time + 1) {
-					new MoveJODUp();
+				if (Timer.getFPGATimestamp() < time + .5) {
+					System.out.println("Nothing");
 				} else {
+					step = 4;
+					time = Timer.getFPGATimestamp();
+				}
+			} else if (step == 4) {
+				//System.out.println("step 3");
+				if (Timer.getFPGATimestamp() < time + .5) {
+					jod.clampJOD();
+				} else {
+					time = Timer.getFPGATimestamp();
 					step = 5;
+				}
+			} else if (step == 5) {
+				//System.out.println("step 4");
+				if (Timer.getFPGATimestamp() < time + .5) {
+					jod.moveJODUp();
+				} else {
+					time = Timer.getFPGATimestamp();
+					step = 6;
+				}
+			} else if (step == 6) {
+				if (Timer.getFPGATimestamp() < time + 2) {
+					driveTrain.drive.arcadeDrive(.5, 0);
+				} else {
+					step = 7;
 				}
 			}
 		//}
