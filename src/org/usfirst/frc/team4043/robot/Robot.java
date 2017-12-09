@@ -124,11 +124,11 @@ public class Robot extends IterativeRobot {
 			if (step == 1) {
 				System.out.println(bucketAngle);
 				if (bucketAngle == 0) {
-					driveTrain.drive(.6, 0);
+					driveTrain.drive.arcadeDrive(.7, 0);
 				} else if (bucketAngle > .5) {
-					driveTrain.drive.arcadeDrive(.6, -.5);
+					driveTrain.drive.arcadeDrive(.6, -.3);
 				} else if (bucketAngle < .5) {
-					driveTrain.drive.arcadeDrive(.6, .5);
+					driveTrain.drive.arcadeDrive(.6, .3);
 				}
 				if (limitSwitch.get()){
 					step = 2;
@@ -161,11 +161,12 @@ public class Robot extends IterativeRobot {
 				}
 			} else if (step == 5) {
 				//System.out.println("step 4");
-				if (Timer.getFPGATimestamp() < time + .5) {
+				if (Timer.getFPGATimestamp() < time + 1) {
 					jod.moveJODUp();
 				} else {
 					time = Timer.getFPGATimestamp();
 					step = 6;
+					jod.stopMotors();
 				}
 			} else if (step == 6) {
 				if (Timer.getFPGATimestamp() < time + 2) {
